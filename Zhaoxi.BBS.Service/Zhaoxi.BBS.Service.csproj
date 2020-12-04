@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Zhaoxi.AglieFramework.Core\Zhaoxi.AglieFramework.Core.csproj" />
+    <ProjectReference Include="..\Zhaoxi.BBS.Database\Zhaoxi.BBS.Database.csproj" />
+    <ProjectReference Include="..\Zhaoxi.BBS.Interface\Zhaoxi.BBS.Interface.csproj" />
+    <ProjectReference Include="..\Zhaoxi.BBS.Model\Zhaoxi.BBS.Model.csproj" />
+  </ItemGroup>
+
+</Project>

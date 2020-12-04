@@ -1,0 +1,382 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="lib/elementui.css">
+    <script src="lib/vue.js"></script>
+    <script src="lib/axios.js"></script>
+    <!-- 引入组件库 -->
+    <script src="lib/elementui.js"></script>
+    <script src="content/utf8-net/ueditor.config.js"></script>
+    <script src="content/utf8-net/ueditor.all.min.js"></script>
+    <script src="content/utf8-net/lang/zh-cn/zh-cn.js"></script>
+</head>
+
+<body>
+    <div id="pageDetail">
+        <div class="head">
+            <img class="logo" src="content/Logo2.png" alt="">
+        </div>
+        <div class="post-edit"  v-if="postInfo.postReplys!=null">
+            <a href="PostBuild.html" class="send-post">发帖</a>
+            <el-pagination class="page-top" background layout="prev, pager, next" :total="postInfo.postReplys.length"
+                :current-page="currentPage" @current-change="curChange" />
+        </div>
+        <div class="post-content" v-if="postInfo.post!=null">
+            <div class="post-title">
+                <div class="left">
+                    查看：{{postInfo.post.clicks}} | 回复：{{postInfo.post.replys}}
+                </div>
+                <div class="right">
+                    {{postInfo.post.postTitle}}
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <div class="content-item">
+                        <div class="left">
+                            <div class="user-no">
+                                {{postInfo.post.createUser.userNo}}
+                            </div>
+                            <div class="user-info">
+                                <img src="content/UserHead.gif" alt="">
+                                <p class="u-name">{{postInfo.post.createUser.userName}}</p>
+                                <p class="u-level">等级：{{postInfo.post.createUser.userLevel}}</p>
+                            </div>
+                        </div>
+                        <div class="right">
+                            <div class="content-info">
+                                发表于 {{postInfo.post.createTime|time}}
+                            </div>
+                            <div class="content-detail">
+                                {{postInfo.post.postContent}}
+                            </div>
+                            <div class="content-foot">
+                                <span @click="reply(postInfo.post.postContent)">回复</span>
+                                <span @click="upDown('post','up',postInfo.post.id)">顶({{getUpCount(postInfo.post)}})</span>
+                                <span @click="upDown('post','down',postInfo.post.id)">踩({{getDownCount(postInfo.post)}})</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li v-for="postReply in postInfo.postReplys">
+                    <div class="content-item">
+                        <div class="left">
+                            <div class="user-no">
+                                {{postReply.createUser.userNo}}
+                            </div>
+                            <div class="user-info">
+                                <img src="content/UserHead.gif" alt="">
+                                <p class="u-name">{{postReply.createUser.userName}}</p>
+                                <p class="u-level">等级：{{postReply.createUser.userLevel}}</p>
+                            </div>
+                        </div>
+                        <div class="right">
+                            <div class="content-info">
+                                发表于 {{postReply.createTime|time}}
+                            </div>
+                            <div class="content-detail" v-html="postReply.replyContent">
+                            </div>
+                            <div class="content-foot">
+                                <span @click="reply(postReply.replyContent)">回复</span>
+                                <span @click="upDown('reply','up',postReply.id)">顶({{getUpCount(postReply)}})</span>
+                                <span @click="upDown('reply','down',postReply.id)">踩({{getDownCount(postReply)}})</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="post-foot"  v-if="postInfo.postReplys!=null">
+            <el-pagination class="page-foot" background layout="prev, pager, next" :total="postInfo.postReplys.length"
+                :current-page="currentPage" @current-change="curChange" />
+        </div>
+        <div class="write-pad">
+            <script id="container" name="content" type="text/plain"></script>
+            <button id="send" @click="send">发表回复</button>
+        </div>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#pageDetail",
+            data: {
+                params: {},
+                currentPage: 1,
+                ue: null,
+                postInfo: {}
+            },
+            mounted() {
+                // this.ue = UE.getEditor('container'{
+                //     toolbars: [[
+                //         'fullscreen', 'source', '|', 'undo', 'redo', '|',
+                //         'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', '|',
+                //         'simpleupload', 'insertimage', '|', 'selectall', 'cleardoc'
+                //     ]], initialFrameWidth: 1024, initialFrameHeight: 500
+                // });
+                this.ue = UE.getEditor('container', {
+                    initialFrameWidth: '100%',
+                    enterTag:"br",
+                });
+
+                this.getParam();
+                this.getPost();
+            },
+            methods: {
+                getParam: function () {
+                    var strParam = location.search.substring(1, location.search.length);
+                    strParam = strParam.split("&");
+                    strParam.forEach(e => {
+                        var key = e.split("=")[0];
+                        var value = e.split("=")[1];
+                        this.params[key] = value;
+                    });
+                },
+                curChange: function (currPage) {
+                    this.currentPage = currPage;
+                },
+                getPost: function () {
+                    var pid = this.params['pid'];
+                    axios.get("http://localhost:5000/post/" + pid).then(res => {
+
+
+                        this.postInfo = res.data;
+                        console.log(this.postInfo)
+                    })
+                },
+                send: function () {
+                    var content = this.ue.getContent();
+                    console.log(this.content);
+
+                    var userId = parseInt(localStorage["userId"]);
+                    var postId = parseInt(this.params['pid']);
+                    axios.post("http://localhost:5000/Reply", { userId, postId, content }).then(res => {
+                        if (res.data) {
+							location.reload();
+                           //location.href = "PostSuccess.html";
+                            this.ue.setContent("");
+                        }
+                        else location.href = "PostError.html";
+                    })
+                },
+                reply:function(replyContent){
+                   var quote = `[quote]${replyContent}[/quote]`;
+                   this.ue.setContent(quote);
+                },
+                getUpCount:function(entity){
+                    if(entity.up!=null && entity.up!=""){
+                       return entity.up.split(',').length;
+                    }
+                    return 0;
+                },
+                getDownCount:function(entity){
+                    if(entity.down!=null && entity.down!=""){
+                       return entity.down.split(',').length;
+                    }
+                    return 0;
+                },
+                upDown:function(entityType,updownType,id){
+                    var isUp = updownType=="up";
+                    var userId =parseInt(localStorage["userId"]);
+                    var PostOrReplyId = id;
+                    axios.put("http://localhost:5000/"+entityType,{isUp,userId,PostOrReplyId}).then(res=>{
+                       history.go(0);
+                    });
+                }
+            },
+            filters: {
+                time: function (value) {
+                    if(value!=null)
+                    return value.replace("T", " ");
+                }
+            }
+        })
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .head {
+            background-color: #e5e5e5;
+            padding: 10px 22px;
+            margin-bottom: 22px;
+        }
+
+        .head .logo {
+            width: 136px;
+        }
+
+        .post-edit {
+            padding: 0 22px;
+            margin-bottom: 22px;
+        }
+
+        .post-edit .send-post {
+            display: inline-block;
+            text-decoration: none;
+            background-color: rgb(74, 131, 255);
+            color: #fff;
+            text-align: center;
+            line-height: 36px;
+            width: 100px;
+            height: 36px;
+            border: 1px solid rgb(74, 131, 255);
+            border-radius: 3px;
+        }
+
+        .post-edit .page-top {
+            float: right;
+        }
+
+        .post-content {
+            margin: 0 22px;
+        }
+
+        .post-content {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #E5EDF2;
+        }
+
+        .post-content li {
+            list-style: none;
+            border-bottom: 6px solid #C2D5E3;
+        }
+
+        .left {
+            width: 200px;
+            float: left;
+        }
+
+        .right {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .post-title .left {
+            font-size: 14px;
+            height: 40px;
+            line-height: 40px;
+            padding-left: 6px;
+            border-bottom: 6px solid #C2D5E3;
+        }
+
+        .post-title .right {
+            height: 40px;
+            line-height: 40px;
+            border-bottom: 6px solid #C2D5E3;
+        }
+
+        .content-item {
+            overflow: hidden;
+        }
+
+        .content-item .left {
+            padding-left: 6px;
+        }
+
+        .content-item .left .user-no {
+            border-bottom: 1px #333 dashed;
+            padding-top: 6px;
+            padding-bottom: 6px;
+            margin-bottom: 6px;
+        }
+
+        .content-item .left .user-info img {
+            display: block;
+            width: 120px;
+            margin: auto;
+            height: 120px;
+            border: 6px solid #fff;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .content-item .left .user-info .u-name {
+            height: 20;
+            width: 120px;
+            margin: auto;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .content-item .left .user-info .u-level {
+            height: 20;
+            width: 120px;
+            margin: auto;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .content-item .right {
+            overflow: hidden;
+            position: relative;
+            min-height: 250px;
+            background-color: #fff;
+        }
+
+        .content-item .right .content-info {
+            border-bottom: 1px #333 dashed;
+            padding-top: 6px;
+            padding-bottom: 6px;
+            margin-bottom: 6px;
+        }
+        .content-item .right .content-detail {
+            margin-bottom: 60px;
+        }
+
+        .content-item .right .content-foot {
+            position: absolute;
+            border-top: 1px dashed #333;
+            height: 30px;
+            line-height: 30px;
+            width: 100%;
+            bottom: 0;
+            left: 0;
+        }
+
+        .content-item .right .content-foot span {
+            margin-left: 20px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .post-foot .page-foot {
+            float: right;
+            margin-right: 22px;
+            margin-top: 22px;
+        }
+
+        .write-pad {
+            margin: 80px 120px 20px 120px;
+        }
+
+        .write-pad #container {
+            height: 180px;
+        }
+
+        .write-pad #send {
+            height: 36px;
+            width: 200px;
+            margin-top: 100px;
+            border: 1px solid rgb(71, 151, 255);
+            background-color: rgb(71, 151, 255);
+            color: #fff;
+            outline: none;
+        }
+
+        .write-pad #send:active {
+            border: 1px solid rgb(36, 131, 255);
+            background-color: rgb(36, 131, 255);
+        }
+    </style>
+</body>
+
+</html>

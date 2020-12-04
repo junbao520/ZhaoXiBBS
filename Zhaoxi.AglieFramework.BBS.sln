@@ -1,0 +1,89 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30709.64
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zhaoxi.AglieFramework.BBS", "Zhaoxi.AglieFramework.BBS\Zhaoxi.AglieFramework.BBS.csproj", "{38E3CA8E-5ECE-4EF9-933B-664E4DA3A4F3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zhaoxi.BBS.Interface", "Zhaoxi.BBS.Interface\Zhaoxi.BBS.Interface.csproj", "{3071AB7F-FCF8-4734-AF7C-86224D0EAA3F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zhaoxi.BBS.Service", "Zhaoxi.BBS.Service\Zhaoxi.BBS.Service.csproj", "{3E2E1648-A98C-4132-B8CE-B1917FB13747}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zhaoxi.BBS.Database", "Zhaoxi.BBS.Database\Zhaoxi.BBS.Database.csproj", "{E896CC61-DDFD-4E38-AD9B-81884FD955A4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zhaoxi.AglieFramework.Core", "Zhaoxi.AglieFramework.Core\Zhaoxi.AglieFramework.Core.csproj", "{5CF0C6C4-936D-4D21-AA06-FB7F9CABC0C9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zhaoxi.BBS.Model", "Zhaoxi.BBS.Model\Zhaoxi.BBS.Model.csproj", "{45D85F24-88D4-49D0-A23D-00F286B69994}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zhaoxi.AglieFramework.Auth", "Zhaoxi.AglieFramework.Auth\Zhaoxi.AglieFramework.Auth.csproj", "{39D9B0B4-6719-41BC-AC93-673C3D93631E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zhaoxi.BBS.Dynamic", "Zhaoxi.BBS.Dynamic\Zhaoxi.BBS.Dynamic.csproj", "{36DDAA8D-F11E-42E0-8424-C48ECC3F71B0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zhaoxi.BBS.UI", "Zhaoxi.BBS.UI\Zhaoxi.BBS.UI.csproj", "{ADA71A68-B478-4529-A365-27D724874F45}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapper.Contrib", "Dapper.Contrib\Dapper.Contrib.csproj", "{B07B3D1C-A50D-43F2-8C83-A5FA40D8F589}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zhaoxi.webapi", "Zhaoxi.webapi\Zhaoxi.webapi.csproj", "{6AE9012D-597F-49CB-8627-02083EE7B181}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{38E3CA8E-5ECE-4EF9-933B-664E4DA3A4F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38E3CA8E-5ECE-4EF9-933B-664E4DA3A4F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38E3CA8E-5ECE-4EF9-933B-664E4DA3A4F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38E3CA8E-5ECE-4EF9-933B-664E4DA3A4F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3071AB7F-FCF8-4734-AF7C-86224D0EAA3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3071AB7F-FCF8-4734-AF7C-86224D0EAA3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3071AB7F-FCF8-4734-AF7C-86224D0EAA3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3071AB7F-FCF8-4734-AF7C-86224D0EAA3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E2E1648-A98C-4132-B8CE-B1917FB13747}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E2E1648-A98C-4132-B8CE-B1917FB13747}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E2E1648-A98C-4132-B8CE-B1917FB13747}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E2E1648-A98C-4132-B8CE-B1917FB13747}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E896CC61-DDFD-4E38-AD9B-81884FD955A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E896CC61-DDFD-4E38-AD9B-81884FD955A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E896CC61-DDFD-4E38-AD9B-81884FD955A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E896CC61-DDFD-4E38-AD9B-81884FD955A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CF0C6C4-936D-4D21-AA06-FB7F9CABC0C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CF0C6C4-936D-4D21-AA06-FB7F9CABC0C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CF0C6C4-936D-4D21-AA06-FB7F9CABC0C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CF0C6C4-936D-4D21-AA06-FB7F9CABC0C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45D85F24-88D4-49D0-A23D-00F286B69994}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45D85F24-88D4-49D0-A23D-00F286B69994}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45D85F24-88D4-49D0-A23D-00F286B69994}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45D85F24-88D4-49D0-A23D-00F286B69994}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39D9B0B4-6719-41BC-AC93-673C3D93631E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39D9B0B4-6719-41BC-AC93-673C3D93631E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39D9B0B4-6719-41BC-AC93-673C3D93631E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39D9B0B4-6719-41BC-AC93-673C3D93631E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36DDAA8D-F11E-42E0-8424-C48ECC3F71B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36DDAA8D-F11E-42E0-8424-C48ECC3F71B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36DDAA8D-F11E-42E0-8424-C48ECC3F71B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36DDAA8D-F11E-42E0-8424-C48ECC3F71B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADA71A68-B478-4529-A365-27D724874F45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADA71A68-B478-4529-A365-27D724874F45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADA71A68-B478-4529-A365-27D724874F45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADA71A68-B478-4529-A365-27D724874F45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B07B3D1C-A50D-43F2-8C83-A5FA40D8F589}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B07B3D1C-A50D-43F2-8C83-A5FA40D8F589}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B07B3D1C-A50D-43F2-8C83-A5FA40D8F589}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B07B3D1C-A50D-43F2-8C83-A5FA40D8F589}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AE9012D-597F-49CB-8627-02083EE7B181}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AE9012D-597F-49CB-8627-02083EE7B181}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AE9012D-597F-49CB-8627-02083EE7B181}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AE9012D-597F-49CB-8627-02083EE7B181}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DAF4DE61-214A-489A-9208-42004D39F9DB}
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN2019 - Subversion Support for Visual Studio
+	EndGlobalSection
+EndGlobal

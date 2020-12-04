@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<!-- 引入样式 -->
+	<link rel="stylesheet" href="lib/elementui.css">
+	<script src="lib/vue.js"></script>
+	<script src="lib/axios.js"></script>
+	<script src="lib/elementui.js"></script>
+	<script src="content/utf8-net/ueditor.config.js"></script>
+	<script src="content/utf8-net/ueditor.all.min.js"></script>
+	<script src="content/utf8-net/lang/zh-cn/zh-cn.js"></script>
+</head>
+
+<body>
+	<div id="app">
+		<div class="write-pad">
+			<div class="post-title">
+				<select v-model="postTypeId">
+					<option value="0">
+						--请选择发帖类型--
+					</option>
+					<option v-for="postType in postTypes" :value="postType.id">
+						{{postType.postType}}
+					</option>
+				</select>
+				<input type="text" v-model="postTitle">
+			</div>
+			<script id="container" name="content" type="text/plain"></script>
+			<button id="sendPost" @click="sendPost">发帖</button>
+		</div>
+	</div>
+	<script>
+		var vm = new Vue({
+			el: "#app",
+			data: {
+				ue: null,
+				postTypes: [],
+				postTitle: "",
+				postTypeId: 0
+			},
+			mounted() {
+				this.ue = UE.getEditor('container', {
+					initialFrameWidth: '100%',
+					initialFrameHeight: 400,
+					enterTag: "br"
+				});
+				this.getTypes();
+			},
+			methods: {
+				getTypes: function () {
+					axios.get("http://localhost:5000/PostType").then(res => {
+						this.postTypes = res.data;
+					});
+				},
+				sendPost: function () {
+					var userId = parseInt(localStorage["userId"]);
+					var postTypeId = this.postTypeId;
+					var postType = postTypeId > 0 ? this.postTypes.filter(m => m.id == this.postTypeId)[0].postType : null;
+					var postTitle = this.postTitle;
+					var content = this.ue.getContent();
+					if (postTypeId == 0 || content == "" || content == null || postTitle == "") {
+						alert("有数据尚未填写");
+						return;
+					}
+					axios.post("http://localhost:5000/Post", { userId, postTypeId, postType, postTitle, content }, {
+						headers: {
+							"Authorization": 'Bearer ' + localStorage["token"]  //token换成从缓存获取
+						}
+					}).then(res => {
+						if (res.data) {
+							//location.href = "PostSuccess.html";
+							this.ue.setContent("");
+							location.href = "./PostList.html";
+						}
+						else location.href = "PostError.html";
+					});
+				}
+			},
+		})
+	</script>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		.write-pad {
+			width: 90%;
+			margin: auto;
+		}
+
+			.write-pad .post-title {
+				padding: 10px 0;
+			}
+
+				.write-pad .post-title select {
+					vertical-align: middle;
+					height: 26px;
+				}
+
+				.write-pad .post-title input {
+					height: 22px;
+					width: 600px;
+					margin-top: -1px;
+				}
+
+		#sendPost {
+			border: 1px solid rgb(36, 131, 255);
+			background-color: rgb(36, 131, 255);
+			color: #fff;
+			width: 100px;
+			height: 30px;
+			margin-top: 10px;
+		}
+	</style>
+
+</body>
+
+</html>

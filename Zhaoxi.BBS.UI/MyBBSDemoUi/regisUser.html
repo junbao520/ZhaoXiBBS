@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <script src="lib/axios.js"></script>
+    </head>
+    <body>
+        <div style="width: 600px; margin: auto;">
+            <h4 style="width: 600px;text-align: center;">用户注册</h4>
+            <p><input id="userNo" style="width: 500px; height: 30px; display:
+                    block;
+                    margin: auto; margin-top: 20px;" type="text"
+                    placeholder="输入账号"></p>
+            <p><input id="userName" style="width: 500px; height: 30px; display:
+                    block;
+                    margin: auto; margin-top: 20px;" type="text"
+                    placeholder="输入用户昵称"></p>
+            <p><input id="pwd" style="width: 500px; height: 30px; display:
+                    block;
+                    margin: auto; margin-top: 20px;" type="text"
+                    placeholder="输入密码"></p>
+            <p><input id="pwd2" style="width: 500px; height: 30px; display:
+                    block;
+                    margin: auto; margin-top: 20px;" type="text"
+                    placeholder="第二次输入密码"></p>
+            <p><button onclick="submit()" style="width: 500px; height: 36px;
+                    display: block;
+                    margin: auto; margin-top: 20px;" type="">注册</button></p>
+        </div>
+        <script>
+            function submit(){
+                var userNo = document.getElementById("userNo").value;
+                var userName = document.getElementById("userName").value;
+				var password = document.getElementById("pwd").value;
+                var pwd2 = document.getElementById("pwd2").value;
+				if (password == pwd2){
+					axios.post("http://localhost:5000/User", { userNo, userName, password }).then(function(res){
+                        if (res.data)
+                            location.href = "./PostList.html";
+                })
+                }else{
+                    alert("两次密码不一致");
+                }
+            }
+        </script>
+    </body>
+</html>
