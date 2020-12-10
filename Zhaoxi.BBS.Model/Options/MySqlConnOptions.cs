@@ -9,5 +9,6 @@ namespace Zhaoxi.BBS.Model.Options
 		public string Write { get; set; }
 
 		public string[] Read { get; set; }
+
 	}
 }

@@ -6,18 +6,19 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
+using Zhaoxi.BBS.Model.Options;
 
 namespace Zhaoxi.BBS.Database
 {
 	public class DbService : IDbService
 	{
-		private string connectionStr;
-
-		private readonly DBConnectionFactory _dBConnectionFactory;
-		public DbService(DBConnectionFactory dBConnectionFactory)
+		DBConnectFactory dBConnectFactory;
+		public DbService(DBConnectFactory dBConnectFactory)
 		{
-			_dBConnectionFactory = dBConnectionFactory;
+			this.dBConnectFactory = dBConnectFactory;
 		}
+
 
 		//public DbService()
 		//{
@@ -37,7 +38,7 @@ namespace Zhaoxi.BBS.Database
 
 		public long Insert<T>(T param) where T : class
 		{
-			using (IDbConnection con = _dBConnectionFactory.GetDbConnection(ConnType.Write))
+			using (IDbConnection con = dBConnectFactory.GetDbConnection(ConnType.Write))
 			{
 				try
 				{
@@ -70,11 +71,11 @@ namespace Zhaoxi.BBS.Database
 
 		public bool Update<T>(T param) where T : class
 		{
-			using (IDbConnection con = _dBConnectionFactory.GetDbConnection(ConnType.Write))
+			using (IDbConnection con = dBConnectFactory.GetDbConnection(ConnType.Write))
 			{
 				try
 				{
-					
+
 					return con.Update<T>(param);
 				}
 				catch (Exception ex)
@@ -85,7 +86,7 @@ namespace Zhaoxi.BBS.Database
 		}
 		public bool Delete<T>(T param) where T : class
 		{
-			using (IDbConnection con = _dBConnectionFactory.GetDbConnection(ConnType.Write))
+			using (IDbConnection con = dBConnectFactory.GetDbConnection(ConnType.Write))
 			{
 				try
 				{
@@ -100,7 +101,7 @@ namespace Zhaoxi.BBS.Database
 
 		public IEnumerable<T> Query<T>() where T : class
 		{
-			using (IDbConnection con = _dBConnectionFactory.GetDbConnection(ConnType.Read))
+			using (IDbConnection con = dBConnectFactory.GetDbConnection(ConnType.Read))
 			{
 				try
 				{
@@ -113,10 +114,9 @@ namespace Zhaoxi.BBS.Database
 				}
 			}
 		}
-
 		public IDbConnection GetDbConnection()
 		{
-			return _dBConnectionFactory.GetDbConnection(ConnType.Write);
+			return dBConnectFactory.GetDbConnection();
 		}
 	}
 }

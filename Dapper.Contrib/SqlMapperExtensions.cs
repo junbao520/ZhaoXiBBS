@@ -134,11 +134,19 @@ namespace Dapper.Contrib.Extensions
 		private static List<PropertyInfo> TypePropertiesCache(Type type,object o)
 		{
 			List<PropertyInfo> properties;
+			// 为什么,没有给null的数据过滤掉? 肯定好,智能 ,如果要实现,最好是动态
+			//加特征//死的
+			// 写死,利用缓存..  不想多些几个实体
+
+
+			// 不能利用缓存 智能还是性能--- 
 			//if (TypeProperties.TryGetValue(type.TypeHandle, out IEnumerable<PropertyInfo> pis))
 			//{
-			//	properties= pis.ToList();
+			//	properties = pis.ToList();
 			//}
-			 properties = o.GetType().GetProperties().Where(IsWriteable).ToList();
+
+			// 自己写的,不好--- 
+			properties = o.GetType().GetProperties().Where(IsWriteable).ToList();
 			for (int i = properties.Count - 1; i >= 0; i--)
 			{
 				var values = properties[i].GetValue(o);

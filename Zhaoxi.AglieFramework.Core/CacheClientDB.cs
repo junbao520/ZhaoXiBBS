@@ -21,6 +21,7 @@ namespace Zhaoxi.AglieFramework.Core
 			this._RedisOptions = jwtTokenOptions.CurrentValue;
 			client = new RedisClient(_RedisOptions.Host, _RedisOptions.Prot, null, _RedisOptions.DB);
 		}
+		// 管道模式 三种模式
 		public IRedisClient GetClient()
 		{
 			return client;
@@ -29,11 +30,13 @@ namespace Zhaoxi.AglieFramework.Core
 		 
 		public void Dispose()
 		{
+			 
 			this.TryCatchException(delegate
 			{
 				this.client.Dispose();
 			}, string.Empty);
 		}
+		// 为了以后全链路做准备
 		private void TryCatchException(Action action, string key)
 		{
 			try
@@ -42,6 +45,7 @@ namespace Zhaoxi.AglieFramework.Core
 			}
 			catch (Exception e)
 			{
+
 
 			}
 		}
@@ -96,7 +100,14 @@ namespace Zhaoxi.AglieFramework.Core
 		{
 			return this.TryCatch<bool>(() => this.client.Add<T>(key, value), key);
 		}
-
+		/// <summary>
+		///  简单模式  事务模式
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="key"></param>
+		/// <param name="value"></param>
+		/// <param name="expiresAt"></param>
+		/// <returns></returns>
 		public bool Add<T>(string key, T value, DateTime expiresAt)
 		{
 			return this.TryCatch<bool>(() => this.client.Add<T>(key, value, expiresAt), key);

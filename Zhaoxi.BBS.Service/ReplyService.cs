@@ -29,10 +29,6 @@ namespace Zhaoxi.BBS.Service
 		}
 		public bool SetUpDwon(UpDownInputDto upDownInput)
 		{
-
-			// 存redis
-			cacheClientDB.AddItemToSortedSet(PostEnum.Reply.ToString() + ":" + upDownInput.PostOrReplyId, upDownInput.UserId.ToString(), upDownInput.IsUp == true ? (double)UpEnum.Up : (double)UpEnum.Down);
-
 			return UpDown(upDownInput.IsUp, upDownInput.UserId, upDownInput.PostOrReplyId);
 		}
 

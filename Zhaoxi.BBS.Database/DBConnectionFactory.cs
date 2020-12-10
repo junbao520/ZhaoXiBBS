@@ -40,11 +40,11 @@ namespace Zhaoxi.BBS.Database
 		}
 	}
 
-	public enum ConnType
-	{
-		Read = 0,
-		Write = 1
-	}
+	//public enum ConnType
+	//{
+	//	Read = 0,
+	//	Write = 1
+	//}
 }
 
 

@@ -90,12 +90,17 @@ namespace Zhaoxi.AglieFramework.BBS
 			services.AddScoped<IPostTypeService, PostTypeService>();
 			services.AddScoped<IReplyService, ReplyService>();
 			services.AddScoped<IDbService, DbService>();
-			services.AddSingleton<DBConnectionFactory, DBConnectionFactory>();
+
+			
 			#endregion
 
 			#region redis
 			services.Configure<RedisConnOptions>(this.Configuration.GetSection("RedisConn"));
+			// 依赖注入   这个地方不太好 
 			services.AddScoped<CacheClientDB, CacheClientDB>();
+
+			services.Configure<MySqlConnOptions>(this.Configuration.GetSection("MySqlConn"));
+			services.AddSingleton<DBConnectFactory, DBConnectFactory>();
 			#endregion
 		}
 
