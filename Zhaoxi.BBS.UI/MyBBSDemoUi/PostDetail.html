@@ -167,16 +167,19 @@
                    this.ue.setContent(quote);
                 },
                 getUpCount:function(entity){
-                    if(entity.up!=null && entity.up!=""){
-                       return entity.up.split(',').length;
-                    }
-                    return 0;
+                    //if(entity.up!=null && entity.up!=""){
+                    //   return entity.up.split(',').length;
+                    //}
+                    //return 0;
+                    return entity.up;
                 },
                 getDownCount:function(entity){
-                    if(entity.down!=null && entity.down!=""){
-                       return entity.down.split(',').length;
-                    }
-                    return 0;
+                    //if(entity.down!=null && entity.down!=""){
+                    //   return entity.down.split(',').length;
+                    //}
+                    //return 0;
+
+					return entity.down;
                 },
                 upDown:function(entityType,updownType,id){
                     var isUp = updownType=="up";

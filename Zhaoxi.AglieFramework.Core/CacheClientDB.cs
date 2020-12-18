@@ -10,7 +10,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.IO;
 namespace Zhaoxi.AglieFramework.Core
 {
 	public class CacheClientDB : IDisposable
@@ -98,6 +98,7 @@ namespace Zhaoxi.AglieFramework.Core
 		}
 		public bool Add<T>(string key, T value)
 		{
+			 
 			return this.TryCatch<bool>(() => this.client.Add<T>(key, value), key);
 		}
 		/// <summary>
@@ -110,6 +111,7 @@ namespace Zhaoxi.AglieFramework.Core
 		/// <returns></returns>
 		public bool Add<T>(string key, T value, DateTime expiresAt)
 		{
+			 
 			return this.TryCatch<bool>(() => this.client.Add<T>(key, value, expiresAt), key);
 		}
 

@@ -25,6 +25,9 @@ namespace Zhaoxi.AglieFramework.BBS.Controllers
 			_iConfiguration = configuration;
 			_iJWTService = service;
 			_userService = userService;
+			System.Console.WriteLine("this is ok");
+
+			_logger.LogInformation("ok");
 		}
 		#endregion
 
